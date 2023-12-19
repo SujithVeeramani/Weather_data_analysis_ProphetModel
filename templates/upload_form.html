@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>CSV Upload Form</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #2b2b2b;
+            color: #ffffff;
+            padding: 20px;
+        }
+
+        h1, h3 {
+            color: #61dafb;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input[type=file], input[type=text] {
+            color: #ffffff;
+            background-color: #2b2b2b;
+            border: 1px solid #61dafb;
+            margin-bottom: 10px;
+        }
+
+        label {
+            margin-right: 10px;
+        }
+
+        button {
+            margin-top: 10px;
+        }
+
+        button[type="submit"] {
+            background-color: #61dafb;
+            color: #2b2b2b;
+            border: none;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a3e5;
+        }
+
+        div {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Weather Data Analysis</h1>
+
+    <form action="/uploadfile/" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" class="form-control-file">
+        <button type="submit" class="btn btn-primary mt-2">Upload CSV</button>
+    </form>
+
+    {% if columns %}
+        <form action="/processfile/" method="post" enctype="multipart/form-data" class="mt-4">
+            <h3>Select Columns</h3>
+            {% for column in columns %}
+                {% if column not in ['date_time', 'tempC'] %}
+                    <label class="mr-3">{{ column }}<input type="checkbox" name="selected_columns" value="{{ column }}"></label>
+                {% endif %}
+            {% endfor %}
+
+            <label for="filename">Enter Filename:</label>
+            <input type="text" name="filename" id="filename" required class="form-control mb-2">
+            
+            <input type="file" name="file" class="form-control-file">
+            <button type="submit" class="btn btn-success mt-2">Process Selected Columns</button>
+        </form>
+    {% endif %}
+
+    {% if df_content %}
+        <div class="mt-4">
+            <h3>Selected Data Preview:</h3>
+            {{ df_content|safe }}
+            <form action="/results" method="get">
+                <button type="submit" class="btn btn-info mt-2">Show Results</button>
+            </form>
+        </div>
+    {% endif %}
+</body>
+</html>
