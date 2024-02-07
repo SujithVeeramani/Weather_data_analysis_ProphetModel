@@ -29,4 +29,3 @@ Feel free to explore, analyze, and visualize your weather data effortlessly with
 ### Have any issues while using this? Feel free to contact me
 
 - LinkedIN  - https://www.linkedin.com/in/sujithvl/
-- Instagram - https://www.instagram.com/sujith_vl_/
